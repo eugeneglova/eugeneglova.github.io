@@ -1,1 +1,37 @@
 Hello World
+<br />
+
+<input type="text" id="input">
+<span id="result"></span>
+
+<script>
+	const result = document.getElementById("result");
+	document.getElementById("input").addEventListener("keyup", (e) => {
+		const val = e.target.value;
+		let ranges = [
+			{
+				from: 0,
+				to: 150,
+				price: 2.42
+			},
+			{
+				from: 150,
+				to: 600,
+				price: 2.96
+			},
+			{
+				from: 600,
+				to: Infinity,
+				price: 5.40
+			}
+		];
+		const sum = ranges.map(range => {
+			if (val > range.from && val <= range.to) {
+				return (val - range.from) * range.price;
+			} else if (val > range.to) {
+				return range.to * range.price;
+			}
+		}).filter(item => item).reduce((sum, item) => sum + item, 0);
+		result.innerHTML = sum;
+	})
+</script>
