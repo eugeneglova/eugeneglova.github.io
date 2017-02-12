@@ -25,11 +25,12 @@ Hello World
 				price: 5.40
 			}
 		];
-		const sum = ranges.map(range => {
+		const sum = ranges.map((range, index) => {
 			if (val > range.from && val <= range.to) {
 				return (val - range.from) * range.price;
 			} else if (val > range.to) {
-				return range.to * range.price;
+				const diff = index && ranges[index - 1].to;
+				return (range.to - diff) * range.price;
 			}
 		}).filter(item => item).reduce((sum, item) => sum + item, 0);
 		result.innerHTML = sum;
