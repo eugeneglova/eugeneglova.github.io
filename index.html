@@ -6,7 +6,7 @@ Hello World
 
 <script>
 	const result = document.getElementById("result");
-	document.getElementById("input").addEventListener("keyup", (e) => {
+	const handler = (e) => {
 		const val = e.target.value;
 		let ranges = [
 			{
@@ -34,5 +34,7 @@ Hello World
 			}
 		}).filter(item => item).reduce((sum, item) => sum + item, 0);
 		result.innerHTML = sum;
-	})
+	}
+	document.getElementById("input").addEventListener("keyup", handler)
+	document.getElementById("input").addEventListener("keypress", handler)
 </script>
