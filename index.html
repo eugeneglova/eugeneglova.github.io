@@ -33,7 +33,7 @@ Hello World
 				return (range.to - diff) * range.price;
 			}
 		}).filter(item => item).reduce((sum, item) => sum + item, 0);
-		result.innerHTML = sum;
+		result.innerHTML = sum.toFixed(2);
 	}
 	document.getElementById("input").addEventListener("keyup", handler)
 	document.getElementById("input").addEventListener("keypress", handler)
