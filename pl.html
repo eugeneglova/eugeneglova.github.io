@@ -8,10 +8,12 @@
 <table>
 <tr>
   <td>Price1</td>
+  <td><input type="number" id="price1_value"></td>
   <td><input type="range" min="8000" max="13000" value="10000" id="price1"></td>
 </tr>
 <tr>
   <td>Price2</td>
+  <td><input type="number" id="price2_value"></td>
   <td><input type="range" min="8000" max="13000" value="10000" id="price2"></td>
 </tr>
 <tr>
@@ -37,6 +39,7 @@ function pl(price1, price2, amount) {
 }
 document.getElementById('price1').addEventListener('change', (e) => {
   const price1 = e.target.value
+  document.getElementById('price1_value').value = price1
   const price2 = document.getElementById('price2').value
   const amount = document.getElementById('amount').value
   const [pl1, pl2] = pl(price1, price2, amount)
@@ -45,6 +48,7 @@ document.getElementById('price1').addEventListener('change', (e) => {
 })
 document.getElementById('price2').addEventListener('change', (e) => {
   const price2 = e.target.value
+  document.getElementById('price2_value').value = price2
   const price1 = document.getElementById('price1').value
   const amount = document.getElementById('amount').value
   const [pl1, pl2] = pl(price1, price2, amount)
