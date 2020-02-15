@@ -8,13 +8,19 @@
 <table>
 <tr>
   <td>Price1</td>
-  <td><input type="number" id="price1_value"></td>
-  <td><input type="range" min="8000" max="13000" value="10000" id="price1"></td>
+  <td><input type="number" value="10200" id="price1"></td>
+  <td>Fee1 %</td>
+  <td><input type="number" value="0.1" id="fee1p"></td>
+  <td>Fee1</td>
+  <td><input type="number" id="fee1"></td>
 </tr>
 <tr>
   <td>Price2</td>
-  <td><input type="number" id="price2_value"></td>
-  <td><input type="range" min="8000" max="13000" value="10000" id="price2"></td>
+  <td><input type="number" value="10251" id="price2"></td>
+  <td>Fee2 %</td>
+  <td><input type="number" value="0.1" id="fee2p"></td>
+  <td>Fee2</td>
+  <td><input type="number" id="fee2"></td>
 </tr>
 <tr>
   <td>Amount</td>
@@ -28,46 +34,51 @@
   <td>P/L without fee</td>
   <td><input type="text" id="pl_without_fee"></td>
 </tr>
-<tr>
-  <td>Fee1</td>
-  <td><input type="text" id="fee1"></td>
-</tr>
-<tr>
-  <td>Fee2</td>
-  <td><input type="text" id="fee2"></td>
-</tr>
 </table>
 <script>
 function updatePL(price1, price2, amount) {
   const pl = Math.abs(price1 - price2) * amount
   const amount1 = Math.abs(amount) * price1
   const amount2 = Math.abs(amount) * price2
-  const fee1 = amount1 * 0.001;
-  const fee2 = amount2 * 0.001;
-  document.getElementById('pl').value = pl - fee1 - fee2
-  document.getElementById('pl_without_fee').value = pl
-  document.getElementById('fee1').value = fee1
-  document.getElementById('fee2').value = fee2
+  const fee1 = amount1 * document.getElementById('fee1p').value / 100;
+  const fee2 = amount2 * document.getElementById('fee2p').value / 100;
+  document.getElementById('pl').value = (pl - fee1 - fee2).toFixed(5)
+  document.getElementById('pl_without_fee').value = pl.toFixed(5)
+  document.getElementById('fee1').value = fee1.toFixed(5)
+  document.getElementById('fee2').value = fee2.toFixed(5)
 }
 document.getElementById('price1').addEventListener('input', (e) => {
   const price1 = e.target.value
-  document.getElementById('price1_value').value = price1
+  document.getElementById('price1').value = price1
   const price2 = document.getElementById('price2').value
   const amount = document.getElementById('amount').value
   updatePL(price1, price2, amount)
 })
 document.getElementById('price2').addEventListener('input', (e) => {
   const price2 = e.target.value
-  document.getElementById('price2_value').value = price2
+  document.getElementById('price2').value = price2
   const price1 = document.getElementById('price1').value
   const amount = document.getElementById('amount').value
   updatePL(price1, price2, amount)
-})
-document.getElementById('amount').addEventListener('change', (e) => {
+})  
+document.getElementById('amount').addEventListener('input', (e) => {
   const amount = e.target.value
   const price1 = document.getElementById('price1').value
   const price2 = document.getElementById('price2').value
   updatePL(price1, price2, amount)
+})
+document.getElementById('fee1p').addEventListener('input', (e) => {
+  const price1 = document.getElementById('price1').value
+  const price2 = document.getElementById('price2').value
+  const amount = document.getElementById('amount').value
+  updatePL(price1, price2, amount)
+})
+document.getElementById('fee2p').addEventListener('input', (e) => {
+  const price1 = document.getElementById('price1').value
+  const price2 = document.getElementById('price2').value
+  const amount = document.getElementById('amount').value
+  updatePL(price1, price2, amount)
+})
 </script>
 </body>
 </html>
