@@ -49,14 +49,14 @@ function updatePL(price1, price2, amount) {
   document.getElementById('fee1').value = fee1
   document.getElementById('fee2').value = fee2
 }
-document.getElementById('price1').addEventListener('change', (e) => {
+document.getElementById('price1').addEventListener('input', (e) => {
   const price1 = e.target.value
   document.getElementById('price1_value').value = price1
   const price2 = document.getElementById('price2').value
   const amount = document.getElementById('amount').value
   updatePL(price1, price2, amount)
 })
-document.getElementById('price2').addEventListener('change', (e) => {
+document.getElementById('price2').addEventListener('input', (e) => {
   const price2 = e.target.value
   document.getElementById('price2_value').value = price2
   const price1 = document.getElementById('price1').value
