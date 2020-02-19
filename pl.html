@@ -5,7 +5,20 @@
 </head>
 <body>
 
-<table>
+<table cellpadding="10">
+<tr>
+  <td>Position type</td>
+  <td>
+    <label>
+      <input type="radio" name="type" value="1" id="long" checked>
+      Long
+    </label>
+    <label>
+      <input type="radio" name="type" value="-1" id="short">
+      Short
+    </label>
+  </td>
+</tr>
 <tr>
   <td>Entry price</td>
   <td><input type="number" value="10200" id="entryPrice"></td>
@@ -23,20 +36,12 @@
   <td><input type="number" id="exitFee"></td>
 </tr>
 <tr>
+  <td>Price diff</td>
+  <td><input type="number" value="51" id="priceDiff"></td>
+</tr>
+<tr>
   <td>Amount</td>
   <td><input type="number" value="0.05" step="0.001" id="amount"></td>
-  <td>
-    <label>
-      <input type="radio" name="type" value="1" id="long" checked>
-      Long
-    </label>
-  </td>
-  <td>
-    <label>
-      <input type="radio" name="type" value="-1" id="short">
-      Short
-    </label>
-  </td>
 </tr>
 <tr>
   <td>P/L</td>
@@ -58,6 +63,7 @@ function updatePL() {
   const exitAmount = Math.abs(amount) * exitPrice
   const entryFee = entryAmount * document.getElementById('entryFeePercent').value / 100;
   const exitFee = exitAmount * document.getElementById('exitFeePercent').value / 100;
+  document.getElementById('priceDiff').value = Math.abs(entryPrice - exitPrice)
   document.getElementById('pl').value = (pl - entryFee - exitFee).toFixed(5)
   document.getElementById('plWithoutFee').value = pl.toFixed(5)
   document.getElementById('entryFee').value = entryFee.toFixed(5)
@@ -72,6 +78,14 @@ function updateExitPrice() {
   document.getElementById('exitPrice').value = exitPrice.toFixed(5)
   updatePL()
 }
+function updatePriceDiff() {
+  const priceDiff = parseFloat(document.getElementById('priceDiff').value)
+  const entryPrice = parseFloat(document.getElementById('entryPrice').value)
+  const isLong = document.getElementById('long').checked
+  exitPrice = entryPrice + (isLong ? priceDiff : - priceDiff)
+  document.getElementById('exitPrice').value = exitPrice.toFixed(5)
+  updatePL()
+}
 document.getElementById('entryPrice').addEventListener('input', updatePL)
 document.getElementById('exitPrice').addEventListener('input', updatePL)  
 document.getElementById('amount').addEventListener('input', updatePL)
@@ -80,6 +94,8 @@ document.getElementById('exitFeePercent').addEventListener('input', updatePL)
 document.getElementById('plWithoutFee').addEventListener('input', updateExitPrice)
 document.getElementById('short').addEventListener('change', updateExitPrice)
 document.getElementById('long').addEventListener('change', updateExitPrice)
+document.getElementById('priceDiff').addEventListener('input', updatePriceDiff)
+updatePL()
 </script>
 </body>
 </html>
